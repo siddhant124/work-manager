@@ -16,7 +16,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <h1>this is glbal layout header</h1>
+        {children}
+        <h1>this is glbal layout footer</h1>
+      </body>
     </html>
   );
 }
