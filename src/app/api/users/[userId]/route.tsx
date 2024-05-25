@@ -1,53 +1,31 @@
+import { getResponseMessage } from "@/helper/response-message";
 import { User } from "@/modles/user";
-import { ErrorType } from "@/shared/common-interfaces";
+import { ErrorType, UserParamsType } from "@/shared/common-interfaces";
 import { NextRequest, NextResponse } from "next/server";
-
-interface ParamsType {
-  userId: string;
-}
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: ParamsType }
+  { params }: { params: UserParamsType }
 ) {
   try {
-    const userDetails = await User.findOne({ email: params.userId }).select("-password");
+    const userDetails = await User.findOne({ email: params.userId }).select(
+      "-password"
+    );
     if (userDetails !== null)
-      return NextResponse.json(
-        {
-          userDetails: userDetails,
-          success: true,
-        },
-        {
-          status: 200,
-          statusText: "success",
-        }
-      );
+      return getResponseMessage(`${userDetails}`, 200, true);
 
-    return NextResponse.json(
-      {
-        userDetails: `No user found with ${params.userId}`,
-        success: true,
-      },
-      {
-        status: 404,
-        statusText: "Not Found",
-      }
+    return getResponseMessage(
+      `No user found with '${params.userId}'`,
+      404,
+      true
     );
   } catch (error) {
     console.log("Failed to get user Details: ", error);
-    return NextResponse.json(
-      {
-        message: `Failed to get users ${
-          (error as ErrorType).errorResponse.errmsg
-        }`,
-        success: false,
-        status: 500,
-      },
-      {
-        status: 500,
-        statusText: "Internal Server Error",
-      }
+
+    return getResponseMessage(
+      `Failed to get users ${(error as ErrorType).errorResponse.errmsg}`,
+      500,
+      false
     );
   }
 }
@@ -55,42 +33,31 @@ export async function GET(
 // Delete specific user
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: ParamsType }
+  { params }: { params: UserParamsType }
 ) {
   try {
     await User.deleteOne({ email: params.userId });
-    return NextResponse.json(
-      {
-        message: `${params.userId} deleted successfully!`,
-        success: true,
-        status: 200,
-      },
-      {
-        status: 200,
-        statusText: "Deleted",
-      }
+    return getResponseMessage(
+      `'${params.userId}' deleted successfully!`,
+      200,
+      true
     );
   } catch (error) {
     console.log(error);
-    return NextResponse.json(
-      {
-        message: `Failed to Delete ${params.userId}:  ${
-          (error as ErrorType).errorResponse.errmsg
-        }`,
-        success: false,
-        status: 500,
-      },
-      {
-        status: 500,
-        statusText: "Internal Server Error",
-      }
+
+    return getResponseMessage(
+      `Failed to Delete '${params.userId}':  ${
+        (error as ErrorType).errorResponse.errmsg
+      }`,
+      500,
+      false
     );
   }
 }
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: ParamsType }
+  { params }: { params: UserParamsType }
 ) {
   const { name, password, about, profileUrl } = await request.json();
   try {
@@ -100,27 +67,21 @@ export async function PUT(
     user.about = about;
     user.profileUrl = profileUrl;
 
-    const updatedUser = await user.save();
-
-    return NextResponse.json({
-      user: updatedUser,
-      message: `${params.userId} updated successfully`,
-      success: true,
-    });
+    await user.save();
+    return getResponseMessage(
+      `'${params.userId}' updated successfully`,
+      200,
+      true
+    );
   } catch (error) {
     console.log(error);
-    return NextResponse.json(
-      {
-        message: `Failed to Update ${params.userId}:  ${
-          (error as ErrorType).errorResponse.errmsg
-        }`,
-        success: false,
-        status: 500,
-      },
-      {
-        status: 500,
-        statusText: "Internal Server Error",
-      }
+
+    return getResponseMessage(
+      `Failed to Update '${params.userId}':  ${
+        (error as ErrorType).errorResponse.errmsg
+      }`,
+      500,
+      false
     );
   }
 }
