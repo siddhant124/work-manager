@@ -20,7 +20,7 @@ export async function DELETE(
   request: NextRequest,
   { params }: { params: TaskParamsType }
 ) {
-  const task = await Task.findByIdAndDelete(params.taskId);
+  await Task.findByIdAndDelete(params.taskId);
   try {
     return getResponseMessage(
       `${params.taskId} deleted successfully`,
