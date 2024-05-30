@@ -31,10 +31,14 @@ export const CustomNavbar = () => {
       <div>
         <ul className="flex space-x-4">
           <li>
-            <Link href="#!">LogIn</Link>
+            <Link href="#!" className="hover:font-semibold">
+              LogIn
+            </Link>
           </li>
           <li>
-            <Link href="#!">SignUp</Link>
+            <Link href="#!" className="hover:font-semibold">
+              SignUp
+            </Link>
           </li>
         </ul>
       </div>
