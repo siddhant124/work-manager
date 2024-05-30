@@ -1,7 +1,7 @@
 import { getResponseMessage } from "@/helper/response-message";
 import { Task } from "@/modles/task";
 import { TaskDetailsProps, TaskParamsType } from "@/shared/common-interfaces";
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 
 export async function GET(
   request: NextRequest,

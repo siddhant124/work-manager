@@ -1,14 +1,13 @@
-import { Metadata } from 'next'
-import React from 'react'
+import React from "react";
+import { Metadata } from "next";
+import AddTask from "./AddTask";
 
 export const metadata: Metadata = {
-    title: "Add Task: Work Manager"
-  }
-  
-const AddTask = () => {
-  return (
-    <div>Add Task Component</div>
-  )
-}
+  title: "Add Task: Work Manager",
+};
 
-export default AddTask
+const AddTaskPage = () => {
+  return <AddTask />;
+};
+
+export default AddTaskPage;

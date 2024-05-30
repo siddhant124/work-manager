@@ -1,3 +1,4 @@
+import { connectDb } from "@/helper/db";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -5,6 +6,7 @@ export const metadata: Metadata = {
 };
 
 export default function Home() {
+  connectDb();
   return (
     <div>
       <h1>Welcome to WORK MANGER</h1>

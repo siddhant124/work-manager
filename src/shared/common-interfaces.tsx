@@ -1,4 +1,5 @@
 export enum TaskStatus {
+  NONE,
   PENDING,
   COMPLETED,
 }
@@ -29,5 +30,6 @@ export interface TaskParamsType {
 export interface TaskDetailsProps {
   title: string;
   content: string;
-  status: TaskStatus
+  status: TaskStatus;
+  userId: string;
 }
