@@ -10,6 +10,7 @@ export interface UserDetailsProps {
   password: string;
   about: string;
   profileUrl: string;
+  userPasswordConfirm: string;
 }
 
 export interface ErrorType {

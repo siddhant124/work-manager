@@ -36,7 +36,7 @@ export const CustomNavbar = () => {
             </Link>
           </li>
           <li>
-            <Link href="#!" className="hover:font-semibold">
+            <Link href="/signup" className="hover:font-semibold">
               SignUp
             </Link>
           </li>

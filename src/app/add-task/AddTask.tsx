@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import addTaskSgv from "@/app/assets/add_task_icon.svg";
+import addTaskSgv from "@/app/assets/add_task_image.svg";
 import Image from "next/image";
 import { AddTaskAPI } from "@/services/taskService";
 import { TaskDetailsProps, TaskStatus } from "@/shared/common-interfaces";
@@ -155,8 +155,6 @@ const AddTask = () => {
             Clear
           </button>
         </div>
-
-        {JSON.stringify(task)}
       </div>
     </div>
   );
