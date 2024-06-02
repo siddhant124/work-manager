@@ -1,5 +1,5 @@
 import { getResponseMessage } from "@/helper/response-message";
-import { User } from "@/modles/user";
+import User from "@/modles/user";
 import { ErrorType, UserDetailsProps } from "@/shared/common-interfaces";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -35,10 +35,9 @@ export async function POST(request: NextRequest) {
 
   try {
     // save the object to database
-    await user.save();
-
+    const createdUser = await user.save();
     return getResponseMessage(`'${name}' created successfully!`, 200, true);
-  } catch (error: unknown) {
+  } catch (error) {
     console.log("Failed to create user:", error);
     // Check if the error is a duplicate key error
     if ((error as ErrorType).errorResponse.code === 11000) {

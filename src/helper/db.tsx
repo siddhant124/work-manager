@@ -1,4 +1,4 @@
-import { User } from "@/modles/user";
+import User from "@/modles/user";
 import mongoose from "mongoose";
 
 export const connectDb = async () => {
@@ -17,17 +17,6 @@ export const connectDb = async () => {
 
     console.log(`Connected to ${connection.db.databaseName} database.`);
     console.log(connection)
-
-    const user = new User({
-      name: "test",
-      email: "test@gmail.com",
-      password: "test@123",
-      about: "This is a test user"
-    })
-
-    await user.save()
-    console.log("user is created")
-
   
   } catch (error) {
 

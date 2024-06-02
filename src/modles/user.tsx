@@ -1,11 +1,11 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
-const userSchema = new mongoose.Schema({
+const userSchema = new Schema({
   name: String,
   email: {
     type: String,
     required: [true, "Email is required!"],
-    unique: true,
+    unique: true
   },
   password: {
     type: String,
@@ -13,12 +13,12 @@ const userSchema = new mongoose.Schema({
   },
   about: String,
   profileUrl: String,
-  //   address: {
-  //     street: String,
-  //     city: String,
-  //     pinCode: Number,
-  //     country: String,
-  //   },
 });
 
-export const User = mongoose.models.users || mongoose.model("users", userSchema);
+// Create or retrieve the model
+const User = mongoose.models.users || mongoose.model("users", userSchema);
+
+// Ensure indexes are created
+User.ensureIndexes();
+
+export default User;
