@@ -1,7 +1,8 @@
 import { getResponseMessage } from "@/helper/response-message";
 import User from "@/modles/user";
 import { ErrorType, UserDetailsProps } from "@/shared/common-interfaces";
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
+import bcrypt from "bcrypt";
 
 export async function GET() {
   try {
@@ -35,6 +36,9 @@ export async function POST(request: NextRequest) {
 
   try {
     // save the object to database
+    user.password = await bcrypt.hash(user.password, 10); // BCRYPT_SALT = 10
+    console.log("userrrrrrrr")
+    console.log(user)
     const createdUser = await user.save();
     return getResponseMessage(`'${name}' created successfully!`, 200, true);
   } catch (error) {
