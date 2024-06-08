@@ -31,7 +31,7 @@ const LoginScreen = () => {
       toast.success("LoggedIn Successfully!");
 
       //redirect to homepage
-      router.push("/profile/user");
+      router.push("/profile");
     } catch (error) {
       console.log("error", error);
       //@ts-ignore

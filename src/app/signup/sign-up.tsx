@@ -7,6 +7,7 @@ import { UserDetailsProps } from "@/shared/common-interfaces";
 import { toast } from "react-toastify";
 import { UserSignUp } from "@/services/userService";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 interface Errors {
   userName?: string;
@@ -16,6 +17,7 @@ interface Errors {
 }
 
 const SignUpPage = () => {
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
   const [userDetailsData, setUserDetailsData] = useState<UserDetailsProps>({
@@ -65,6 +67,7 @@ const SignUpPage = () => {
         toast.success("User created successfully!", {
           position: "top-right",
         });
+        router.push("/login");
         void handleReset();
       }
     } catch (error) {
