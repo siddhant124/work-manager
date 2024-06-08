@@ -5,7 +5,7 @@ import addTaskSgv from "@/app/assets/sign_up_image.svg";
 import Image from "next/image";
 import { UserDetailsProps } from "@/shared/common-interfaces";
 import { toast } from "react-toastify";
-import { CreateUserAPI } from "@/services/userService";
+import { UserSignUp } from "@/services/userService";
 import axios from "axios";
 
 interface Errors {
@@ -61,7 +61,7 @@ const SignUpPage = () => {
     setIsLoading(true);
     try {
       if (validateForm()) {
-        await CreateUserAPI(userDetailsData);
+        await UserSignUp(userDetailsData);
         toast.success("User created successfully!", {
           position: "top-right",
         });
@@ -69,7 +69,8 @@ const SignUpPage = () => {
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        const errorMessage = error.response?.data?.result || "Failed to create user";
+        const errorMessage =
+          error.response?.data?.result || "Failed to create user";
         toast.error(errorMessage, {
           position: "top-right",
         });

@@ -34,3 +34,8 @@ export interface TaskDetailsProps {
   status: TaskStatus;
   userId: string;
 }
+
+export interface UserLoginProps {
+  email: string;
+  password: string;
+}

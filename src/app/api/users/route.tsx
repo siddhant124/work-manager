@@ -36,9 +36,9 @@ export async function POST(request: NextRequest) {
 
   try {
     // save the object to database
-    user.password = await bcrypt.hash(user.password, 10); // BCRYPT_SALT = 10
-    console.log("userrrrrrrr")
-    console.log(user)
+    user.password = await bcrypt.hash(user.password, 10);
+    console.log("userrrrrrrr");
+    console.log(user);
     const createdUser = await user.save();
     return getResponseMessage(`'${name}' created successfully!`, 200, true);
   } catch (error) {
@@ -54,9 +54,7 @@ export async function POST(request: NextRequest) {
     }
 
     return getResponseMessage(
-      `Failed to create user: ${
-        (error as ErrorType).errorResponse.errmsg
-      }`,
+      `Failed to create user: ${(error as ErrorType).errorResponse.errmsg}`,
       500,
       false
     );

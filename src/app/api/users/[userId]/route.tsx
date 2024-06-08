@@ -1,5 +1,5 @@
 import { getResponseMessage } from "@/helper/response-message";
-import { User } from "@/modles/user";
+import User from "@/modles/user";
 import { ErrorType, UserParamsType } from "@/shared/common-interfaces";
 import { NextRequest, NextResponse } from "next/server";
 
