@@ -4,14 +4,19 @@ import React, { useState } from "react";
 import loginImage from "@/app/assets/login_image.svg";
 import Image from "next/image";
 import { toast } from "react-toastify";
+import { UserLoginProps } from "@/shared/common-interfaces";
+import { UserLogIn } from "@/services/userService";
+import { useRouter } from "next/navigation";
 
 const LoginScreen = () => {
-  const [loginData, setLoginData] = useState({
+  const [loginData, setLoginData] = useState<UserLoginProps>({
     email: "",
     password: "",
   });
 
-  const handleUserLogin = (
+  const router = useRouter();
+
+  const handleUserLogin = async (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     if (loginData.email.trim() === "" || loginData.password.trim() === "") {
@@ -19,7 +24,21 @@ const LoginScreen = () => {
         position: "top-right",
       });
       return;
-    } 
+    }
+    try {
+      const response = await UserLogIn(loginData);
+      console.log(response);
+      toast.success("LoggedIn Successfully!");
+
+      //redirect to homepage
+      router.push("/profile/user");
+    } catch (error) {
+      console.log("error", error);
+      //@ts-ignore
+      toast.error(error.response.data.result, {
+        position: "top-right",
+      });
+    }
   };
 
   return (
