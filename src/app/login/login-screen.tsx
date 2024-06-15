@@ -1,12 +1,17 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import loginImage from "@/app/assets/login_image.svg";
 import Image from "next/image";
 import { toast } from "react-toastify";
-import { UserLoginProps } from "@/shared/common-interfaces";
-import { UserLogIn } from "@/services/userService";
+import {
+  UserContextData,
+  UserLoginProps,
+  UserResponse,
+} from "@/shared/common-interfaces";
+import { CurrentUser, UserLogIn } from "@/services/userService";
 import { useRouter } from "next/navigation";
+import UserContext from "@/helper/context/user-context";
 
 const LoginScreen = () => {
   const [loginData, setLoginData] = useState<UserLoginProps>({
@@ -15,10 +20,9 @@ const LoginScreen = () => {
   });
 
   const router = useRouter();
+  const context = useContext(UserContext) as UserContextData;
 
-  const handleUserLogin = async (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
+  const handleUserLogin = async () => {
     if (loginData.email.trim() === "" || loginData.password.trim() === "") {
       toast.info("Email or password is empty!!", {
         position: "top-right",
@@ -26,10 +30,16 @@ const LoginScreen = () => {
       return;
     }
     try {
-      const response = await UserLogIn(loginData);
-      console.log(response);
+      const _ = await UserLogIn(loginData);
       toast.success("LoggedIn Successfully!");
-
+      try {
+        const loggedInUser = (await CurrentUser()) as UserResponse;
+        context.setUser({ ...loggedInUser });
+      } catch (error) {
+        //@ts-ignore
+        toast.error(error.response.data.message);
+        context.setUser(undefined);
+      }
       //redirect to homepage
       router.push("/profile");
     } catch (error) {
@@ -117,7 +127,7 @@ const LoginScreen = () => {
           <button
             type="submit"
             className="bg-green-300 hover:bg-green-500 p-4 rounded-2xl"
-            onClick={(event) => void handleUserLogin(event)}
+            onClick={() => void handleUserLogin()}
           >
             {/* {isLoading ? "SigningIn..." : "Sign Up"} */}
             Login

@@ -1,8 +1,8 @@
-import { HttpAxios } from "@/helper/httpHelper";
+import { httpAxios } from "@/helper/httpHelper";
 import { TaskDetailsProps } from "@/shared/common-interfaces";
 
 export async function AddTaskAPI(task: TaskDetailsProps) {
-  const result = await HttpAxios.post("/api/tasks", task).then(
+  const result = await httpAxios.post("/api/tasks", task).then(
     (response) => response.data
   );
 

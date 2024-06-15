@@ -3,7 +3,6 @@ import type { NextRequest } from "next/server";
 
 // This function can be marked `async` if using `await` inside
 export function middleware(request: NextRequest) {
-  console.log("middleware executed");
   const authToken = request.cookies.get("authToken")?.value;
   const { pathname } = request.nextUrl;
 
@@ -15,12 +14,20 @@ export function middleware(request: NextRequest) {
 
   if (isLoginsignUpPageOpen) {
     // When user tries to access login, signup routes when already logged in, we will redirect the user to profile
-    if (authToken !== undefined) {
+    if (authToken) {
       return NextResponse.redirect(new URL("/profile", request.url));
     }
   } else {
     // When user tries to access secured routes when not logged in, we will redirect the user to login page
-    if (authToken == undefined) {
+    if (!authToken) {
+      if(request.nextUrl.pathname.startsWith("/api")){
+        return NextResponse.json({
+          message: "Access denied",
+          success: false
+        },{
+          status: 401
+        })
+      }
       return NextResponse.redirect(new URL("/login", request.url));
     }
   }
