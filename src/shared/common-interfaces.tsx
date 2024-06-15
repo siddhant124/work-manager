@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from "react";
+
 export enum TaskStatus {
   NONE,
   PENDING,
@@ -39,3 +41,29 @@ export interface UserLoginProps {
   email: string;
   password: string;
 }
+
+export type JWTVerifyResponse = {
+  _id: string;
+  name: string;
+  iat: number;
+};
+
+export type ContextProps = {
+  _id: string;
+  name: string;
+  email: string;
+  about: string;
+  profileUrl: string;
+  authToken: string;
+  __v: number;
+};
+
+export interface UserResponse {
+  currentUser: ContextProps;
+  success: boolean;
+}
+
+export type UserContextData = {
+  user: UserResponse | undefined;
+  setUser: Dispatch<SetStateAction<UserResponse | undefined>>;
+};
