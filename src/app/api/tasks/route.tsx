@@ -1,16 +1,19 @@
 import { getResponseMessage } from "@/helper/response-message";
 import { Task } from "@/modles/task";
+import User from "@/modles/user";
+import { JWTVerifyResponse, TaskDetails } from "@/shared/common-interfaces";
 import { NextRequest, NextResponse } from "next/server";
+import jwt from "jsonwebtoken";
 
 // get all task
-export async function GET(request: NextRequest) {
-  let tasks = await Task.find();
+export async function GET(_: NextRequest) {
+  let response = (await Task.find()) as TaskDetails[];
   try {
     return NextResponse.json(
       {
-        result: tasks,
+        tasks: response,
         success: true,
-        length: tasks.length,
+        length: response.length,
       },
       {
         status: 200,
@@ -23,12 +26,21 @@ export async function GET(request: NextRequest) {
 
 // create taks
 export async function POST(request: NextRequest) {
-  const { title, content, userId } = await request.json();
+  const { title, content, status } = await request.json();
+
+  // fetching loggedIn user id
+  const authToken = request.cookies.get("authToken")?.value;
+  const data = jwt.verify(
+    `${authToken}`,
+    `${process.env.JWT_KEY}`
+  ) as JWTVerifyResponse;
+
   try {
     const task = new Task({
       title,
       content,
-      userId,
+      status,
+      userId: data._id,
     });
 
     const createdtask = await task.save();

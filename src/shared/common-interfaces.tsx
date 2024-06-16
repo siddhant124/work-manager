@@ -34,7 +34,7 @@ export interface TaskDetailsProps {
   title: string;
   content: string;
   status: TaskStatus;
-  userId: string;
+  userId?: string;
 }
 
 export interface UserLoginProps {
@@ -66,4 +66,20 @@ export interface UserResponse {
 export type UserContextData = {
   user: UserResponse | undefined;
   setUser: Dispatch<SetStateAction<UserResponse | undefined>>;
+};
+
+export type TaskDetails = {
+  _id: string;
+  title: string;
+  content: string;
+  createdDate: string;
+  status: TaskStatus;
+  userId: string;
+  __v: number;
+};
+
+export type UserSpecificTasks = {
+  tasks: TaskDetails[];
+  success: boolean;
+  length: number;
 };
