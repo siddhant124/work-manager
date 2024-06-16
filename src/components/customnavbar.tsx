@@ -33,7 +33,7 @@ export const CustomNavbar = () => {
       <div className="brand">
         <h1 className="text-2xl font-mono font-semibold">Work Manager</h1>
       </div>
-      {context.user && (
+      {context.user?.currentUser && (
         <div>
           <ul className="flex space-x-6">
             <li>
@@ -70,7 +70,7 @@ export const CustomNavbar = () => {
         </div>
       )}
       <div>
-        {context.user ? (
+        {context.user?.currentUser ? (
           <>
             <ul className="flex space-x-4">
               <li>{context.user.currentUser.name}</li>

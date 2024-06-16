@@ -1,19 +1,21 @@
 import { getResponseMessage } from "@/helper/response-message";
 import { Task } from "@/modles/task";
-import { UserParamsType } from "@/shared/common-interfaces";
+import { TaskDetails, UserParamsType } from "@/shared/common-interfaces";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
   request: NextRequest,
   { params }: { params: UserParamsType }
 ) {
-  const tasks = await Task.find({ userId: params.userId });
+  const response = (await Task.find({
+    userId: params.userId,
+  })) as TaskDetails[];
   try {
     return NextResponse.json(
       {
-        result: tasks,
+        tasks: response,
         success: true,
-        length: tasks.length,
+        length: response.length,
       },
       {
         status: 200,
@@ -29,13 +31,13 @@ export async function GET(
   }
 }
 
-export async function DELETE(
-  request: NextRequest
-) {
+export async function DELETE(request: NextRequest) {
   const { deleteTaskIds } = await request.json();
 
   try {
-    const deletePromises = deleteTaskIds.map((id: string) => Task.findByIdAndDelete({_id: id}));
+    const deletePromises = deleteTaskIds.map((id: string) =>
+      Task.findByIdAndDelete({ _id: id })
+    );
 
     await Promise.all(deletePromises);
 
@@ -44,13 +46,8 @@ export async function DELETE(
       200,
       true
     );
-    
   } catch (error) {
     console.log(error);
-    return getResponseMessage(
-      `Failed to delete: ${error}`,
-      500,
-      false
-    );
+    return getResponseMessage(`Failed to delete: ${error}`, 500, false);
   }
 }

@@ -14,7 +14,6 @@ const AddTask = () => {
     title: "",
     content: "",
     status: TaskStatus.NONE,
-    userId: "66517d099fc341405ece78f5",
   });
 
   const HandleClearTask = () => {
@@ -22,7 +21,6 @@ const AddTask = () => {
       title: "",
       content: "",
       status: TaskStatus.NONE,
-      userId: "66517d099fc341405ece78f5",
     });
   };
 
@@ -30,6 +28,8 @@ const AddTask = () => {
     setIsLoading(true);
     try {
       const result = await AddTaskAPI(task);
+      console.log("qaaa", task);
+      console.log("dddddd", result);
 
       toast.success("Task added successfully!", {
         position: "top-right",

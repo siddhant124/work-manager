@@ -13,12 +13,21 @@ export async function GET(request: NextRequest) {
       `${authToken}`,
       `${process.env.JWT_KEY}`
     ) as JWTVerifyResponse;
-    const currentUser = await User.findById(data._id).select("-password") as ContextProps;
+    const currentUser = (await User.findById(data._id).select(
+      "-password"
+    )) as ContextProps;
 
-    return NextResponse.json({
+    const response = NextResponse.json({
       currentUser: currentUser,
       successs: true,
     });
+
+    currentUser === null &&
+      response.cookies.set("authToken", "", {
+        expires: new Date(0),
+      });
+
+    return response;
   } catch (error) {
     console.log(error);
     return getResponseMessage(`${error}`, 400, false);
