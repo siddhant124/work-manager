@@ -3,6 +3,7 @@ import User from "@/modles/user";
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcrypt";
 import Jwt from "jsonwebtoken";
+import { connectDb } from "@/helper/db";
 
 //  Steps:
 // 1. Get user from database with help of email and password
@@ -13,6 +14,7 @@ import Jwt from "jsonwebtoken";
 // 6. set token into cookie (send direct token)
 
 export async function POST(request: NextRequest) {
+  await connectDb()
   const { email, password } = await request.json();
   try {
     //1. Create user

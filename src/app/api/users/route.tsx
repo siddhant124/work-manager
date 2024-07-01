@@ -3,8 +3,11 @@ import User from "@/modles/user";
 import { ErrorType, UserDetailsProps } from "@/shared/common-interfaces";
 import { NextRequest } from "next/server";
 import bcrypt from "bcrypt";
+import { connectDb } from "@/helper/db";
 
 export async function GET() {
+  await connectDb()
+
   try {
     let users = await User.find().select("-password");
     return getResponseMessage(users, 200, true);
@@ -21,6 +24,8 @@ export async function GET() {
 
 // Create User
 export async function POST(request: NextRequest) {
+  await connectDb()
+
   // fetch user details from request
   const { name, email, password, about, profileUrl }: UserDetailsProps =
     await request.json();
@@ -37,7 +42,7 @@ export async function POST(request: NextRequest) {
   try {
     // save the object to database
     user.password = await bcrypt.hash(user.password, 10);
-    const createdUser = await user.save();
+     await user.save();
     return getResponseMessage(`'${name}' created successfully!`, 200, true);
   } catch (error) {
     console.log("Failed to create user:", error);

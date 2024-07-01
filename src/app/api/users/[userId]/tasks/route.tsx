@@ -1,12 +1,15 @@
+import { connectDb } from "@/helper/db";
 import { getResponseMessage } from "@/helper/response-message";
 import { Task } from "@/modles/task";
 import { TaskDetails, UserParamsType } from "@/shared/common-interfaces";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
-  request: NextRequest,
+  _: NextRequest,
   { params }: { params: UserParamsType }
 ) {
+  await connectDb()
+
   const response = (await Task.find({
     userId: params.userId,
   })) as TaskDetails[];
@@ -32,6 +35,8 @@ export async function GET(
 }
 
 export async function DELETE(request: NextRequest) {
+  await connectDb()
+
   const { deleteTaskIds } = await request.json();
 
   try {

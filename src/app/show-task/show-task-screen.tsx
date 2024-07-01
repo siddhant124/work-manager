@@ -15,6 +15,8 @@ const ShowTasksScreen = () => {
   const context = useContext(UserContext) as UserContextData;
   const [tasks, setUserTasks] = useState<TaskDetails[]>([]);
 
+  const [isTaskDeleteBtnClicked, setIsTaskDeleteBtnClicked] = useState(false);
+
   async function fetchUserTasks(userId: string) {
     try {
       const tasks = (await GetUserTasksAPI(userId)) as UserSpecificTasks;
@@ -27,16 +29,21 @@ const ShowTasksScreen = () => {
     }
   }
   useEffect(() => {
+    setIsTaskDeleteBtnClicked(false);
     if (context.user?.currentUser)
       fetchUserTasks(context.user?.currentUser._id);
-  }, [context.user?.currentUser]);
+  }, [context.user?.currentUser, isTaskDeleteBtnClicked]);
 
   return (
     <div className="flex w-full flex-col mt-3">
       <h1 className="text-3xl text-center">Your Tasks ({tasks.length})</h1>
-        {tasks.map((task) => (
-          <UserTask task={task} key={task._id} />
-        ))}
+      {tasks.map((task) => (
+        <UserTask
+          task={task}
+          key={task._id}
+          setIsTaskDeleteBtnClicked={setIsTaskDeleteBtnClicked}
+        />
+      ))}
     </div>
   );
 };

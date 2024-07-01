@@ -1,12 +1,15 @@
+import { connectDb } from "@/helper/db";
 import { getResponseMessage } from "@/helper/response-message";
 import User from "@/modles/user";
 import { ErrorType, UserParamsType } from "@/shared/common-interfaces";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
-  request: NextRequest,
+  _: NextRequest,
   { params }: { params: UserParamsType }
 ) {
+  await connectDb()
+
   try {
     const userDetails = await User.findOne({ email: params.userId }).select(
       "-password"
@@ -32,9 +35,11 @@ export async function GET(
 
 // Delete specific user
 export async function DELETE(
-  request: NextRequest,
+  _: NextRequest,
   { params }: { params: UserParamsType }
 ) {
+  await connectDb()
+
   try {
     await User.deleteOne({ email: params.userId });
     return getResponseMessage(
@@ -59,6 +64,8 @@ export async function PUT(
   request: NextRequest,
   { params }: { params: UserParamsType }
 ) {
+  await connectDb()
+
   const { name, password, about, profileUrl } = await request.json();
   try {
     const user = await User.findOne({ email: params.userId });

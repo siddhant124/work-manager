@@ -27,9 +27,7 @@ const AddTask = () => {
   const handleAddTask = async () => {
     setIsLoading(true);
     try {
-      const result = await AddTaskAPI(task);
-      console.log("qaaa", task);
-      console.log("dddddd", result);
+      await AddTaskAPI(task);
 
       toast.success("Task added successfully!", {
         position: "top-right",

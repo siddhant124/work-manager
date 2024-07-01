@@ -1,12 +1,15 @@
+import { connectDb } from "@/helper/db";
 import { getResponseMessage } from "@/helper/response-message";
 import { Task } from "@/modles/task";
 import { TaskDetailsProps, TaskParamsType } from "@/shared/common-interfaces";
 import { NextRequest } from "next/server";
 
 export async function GET(
-  request: NextRequest,
+  _: NextRequest,
   { params }: { params: TaskParamsType }
 ) {
+  await connectDb()
+
   const task = await Task.findById(params.taskId);
   try {
     return getResponseMessage(task, 200, true);
@@ -20,6 +23,8 @@ export async function DELETE(
   request: NextRequest,
   { params }: { params: TaskParamsType }
 ) {
+  await connectDb()
+
   await Task.findByIdAndDelete(params.taskId);
   try {
     return getResponseMessage(
@@ -37,6 +42,7 @@ export async function PUT(
   request: NextRequest,
   { params }: { params: TaskParamsType }
 ) {
+  await connectDb()
   const { title, content, status } = (await request.json()) as TaskDetailsProps;
   const task = await Task.findById(params.taskId);
 

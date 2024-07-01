@@ -4,9 +4,12 @@ import User from "@/modles/user";
 import { JWTVerifyResponse, TaskDetails } from "@/shared/common-interfaces";
 import { NextRequest, NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
+import { connectDb } from "@/helper/db";
 
 // get all task
 export async function GET(_: NextRequest) {
+  await connectDb()
+   
   let response = (await Task.find()) as TaskDetails[];
   try {
     return NextResponse.json(
@@ -35,6 +38,8 @@ export async function POST(request: NextRequest) {
     `${process.env.JWT_KEY}`
   ) as JWTVerifyResponse;
 
+  await connectDb()
+
   try {
     const task = new Task({
       title,
@@ -43,7 +48,7 @@ export async function POST(request: NextRequest) {
       userId: data._id,
     });
 
-    const createdtask = await task.save();
+    await task.save();
     return getResponseMessage(`'${title}' created successfully`, 200, true);
   } catch (error) {
     console.log("failed to create task");
