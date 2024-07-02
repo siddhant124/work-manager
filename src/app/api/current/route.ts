@@ -9,6 +9,13 @@ export async function GET(request: NextRequest) {
   const authToken = request.cookies.get("authToken")?.value;
 
   try {
+
+    if(!authToken){
+      return NextResponse.json({
+        message: "User is not logged In"
+      })
+    }
+
     const data = jwt.verify(
       `${authToken}`,
       `${process.env.JWT_KEY}`
