@@ -21,12 +21,15 @@ const LoginScreen = () => {
 
   const router = useRouter();
   const context = useContext(UserContext) as UserContextData;
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleUserLogin = async () => {
+    setIsLoading(true);
     if (loginData.email.trim() === "" || loginData.password.trim() === "") {
       toast.info("Email or password is empty!!", {
         position: "top-right",
       });
+      setIsLoading(false);
       return;
     }
     try {
@@ -48,11 +51,13 @@ const LoginScreen = () => {
       toast.error(error.response.data.result, {
         position: "top-right",
       });
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
-    <div className="flex w-full justify-center ">
+    <div className="flex w-full justify-center">
       <div className="w-2/4">
         <div className="flex mt-10 justify-center">
           <Image
@@ -75,7 +80,7 @@ const LoginScreen = () => {
             </label>
             <input
               type="email"
-              className="p-2.5 flex rounded-xl border border-orange-400"
+              className="p-2.5 flex rounded-xl border border-blue-400 dark:bg-black"
               id="userEmail"
               placeholder="Enter email"
               name="userEmail"
@@ -104,7 +109,7 @@ const LoginScreen = () => {
             </label>
             <input
               type="password"
-              className="p-2.5 flex rounded-xl border border-orange-400"
+              className="p-2.5 flex rounded-xl border border-blue-400 dark:bg-black"
               id="userPassword"
               placeholder="Enter password"
               name="userPassword"
@@ -125,18 +130,23 @@ const LoginScreen = () => {
         {/* add and clear button */}
         <div className="mt-6 w-full flex flex-row justify-center space-x-5">
           <button
-            type="submit"
-            className="bg-green-300 hover:bg-green-500 p-4 rounded-2xl"
-            onClick={() => void handleUserLogin()}
-          >
-            {/* {isLoading ? "SigningIn..." : "Sign Up"} */}
-            Login
-          </button>
-          <button
             type="button"
-            className="bg-red-300 hover:bg-red-500 p-4 rounded-2xl"
+            className="bg-red-300 hover:bg-red-500 p-4 rounded-2xl dark:bg-red-700 dark:hover:bg-red-800 dark:text-gray-200"
+            onClick={() => {
+              setLoginData({
+                email: "",
+                password: "",
+              });
+            }}
           >
             Reset
+          </button>
+          <button
+            type="submit"
+            className="bg-green-300 hover:bg-green-500 p-4 rounded-2xl dark:bg-blue-700 dark:hover:bg-blue-800 dark:text-gray-200"
+            onClick={() => void handleUserLogin()}
+          >
+            {isLoading ? "Logging..." : "Login"}
           </button>
         </div>
       </div>

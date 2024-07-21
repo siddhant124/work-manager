@@ -28,7 +28,7 @@ export const UserTask = ({
 
   return (
     <div className="flex flex-col items-center">
-      <div className="flex flex-col mt-5 rounded-lg w-2/3 shadow-xl bg-white p-4 overflow-hidden">
+      <div className="flex flex-col mt-5 rounded-lg w-2/3 shadow-xl bg-white dark:bg-black p-4 overflow-hidden">
         <div className="flex flex-row items-center mt-4 justify-between">
           <h2 className="text-xl font-bold mb-1">{task.title}</h2>
           <MdDeleteForever
@@ -52,8 +52,8 @@ export const UserTask = ({
             className={`px-2 py-1 rounded-full 
                ${
                  task.status == TaskStatus.PENDING
-                   ? "bg-red-500 text-white"
-                   : "bg-green-500 text-white"
+                   ? "bg-red-500 text-white dark:bg-red-700 dark:hover:bg-red-800 dark:text-gray-200"
+                   : "bg-green-500 text-white dark:bg-blue-700 dark:hover:bg-blue-800 dark:text-gray-200"
                }`}
           >
             {task.status == TaskStatus.PENDING ? "PENDING" : "COMPLETED"}

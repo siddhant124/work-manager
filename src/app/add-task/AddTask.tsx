@@ -68,7 +68,7 @@ const AddTask = () => {
           </label>
           <input
             type="text"
-            className="w-full p-2.5 rounded-xl border border-orange-400"
+            className="w-full p-2.5 rounded-xl border border-blue-400 dark:bg-black"
             id="task_title"
             placeholder="Add task here"
             name="task-title"
@@ -91,7 +91,7 @@ const AddTask = () => {
             Content
           </label>
           <textarea
-            className="w-full p-2.5 rounded-xl border border-orange-400"
+            className="w-full p-2.5 rounded-xl border border-blue-400 dark:bg-black"
             id="task_content"
             placeholder="Add task description here"
             rows={5}
@@ -117,7 +117,7 @@ const AddTask = () => {
 
           <select
             id="task_status"
-            className="w-full p-2.5 rounded-xl border border-orange-400"
+            className="w-full p-2.5 rounded-xl border border-blue-400 dark:bg-black"
             name="task-status"
             value={task.status}
             onChange={(event) => {
@@ -141,16 +141,17 @@ const AddTask = () => {
         {/* add and clear button */}
         <div className="mt-6 w-full flex flex-row justify-center space-x-5">
           <button
-            className="bg-green-300 hover:bg-green-500 p-4 rounded-2xl"
-            onClick={() => void handleAddTask()}
-          >
-            {isLoading ? "Adding Task..." : "Add Task"}
-          </button>
-          <button
-            className="bg-red-300 hover:bg-red-500 p-4 rounded-2xl"
+            className="bg-red-300 hover:bg-red-500 p-4 rounded-2xl dark:bg-red-700 dark:hover:bg-red-800 dark:text-gray-200"
             onClick={() => void HandleClearTask()}
           >
             Clear
+          </button>
+
+          <button
+            className="bg-green-300 hover:bg-green-500 p-4 rounded-2xl dark:bg-blue-700 dark:hover:bg-blue-800 dark:text-gray-200"
+            onClick={() => void handleAddTask()}
+          >
+            {isLoading ? "Adding Task..." : "Add Task"}
           </button>
         </div>
       </div>

@@ -123,7 +123,7 @@ const SignUpPage = () => {
             </label>
             <input
               type="text"
-              className="p-2.5 flex rounded-xl border border-orange-400"
+              className="p-2.5 flex rounded-xl border border-blue-400 dark:bg-black"
               id="userName"
               placeholder="Enter name"
               name="userName"
@@ -152,7 +152,7 @@ const SignUpPage = () => {
             </label>
             <input
               type="email"
-              className="p-2.5 flex rounded-xl border border-orange-400"
+              className="p-2.5 flex rounded-xl border border-blue-400 dark:bg-black"
               id="userEmail"
               placeholder="Enter email"
               name="userEmail"
@@ -181,7 +181,7 @@ const SignUpPage = () => {
             </label>
             <input
               type="password"
-              className="p-2.5 flex rounded-xl border border-orange-400"
+              className="p-2.5 flex rounded-xl border border-blue-400 dark:bg-black"
               id="userPassword"
               placeholder="Enter password"
               name="userPassword"
@@ -210,7 +210,7 @@ const SignUpPage = () => {
             </label>
             <input
               type="password"
-              className="p-2.5 flex rounded-xl border border-orange-400"
+              className="p-2.5 flex rounded-xl border border-blue-400 dark:bg-black"
               id="userPasswordConfirm"
               placeholder="Re-enter password"
               name="userPasswordConfirm"
@@ -240,7 +240,7 @@ const SignUpPage = () => {
               About
             </label>
             <textarea
-              className="w-full p-2.5 rounded-xl border border-orange-400"
+              className="w-full p-2.5 rounded-xl border border-blue-400 dark:bg-black"
               id="userAbout"
               placeholder="Enter about"
               rows={5}
@@ -259,18 +259,19 @@ const SignUpPage = () => {
         {/* add and clear button */}
         <div className="mt-6 w-full flex flex-row justify-center space-x-5">
           <button
-            type="submit"
-            className="bg-green-300 hover:bg-green-500 p-4 rounded-2xl"
-            onClick={handleCreateUser}
-          >
-            {isLoading ? "SigningIn..." : "Sign Up"}
-          </button>
-          <button
             type="button"
-            className="bg-red-300 hover:bg-red-500 p-4 rounded-2xl"
+            className="bg-red-300 hover:bg-red-500 p-4 rounded-2xl dark:bg-red-700 dark:hover:bg-red-800 dark:text-gray-200"
             onClick={handleReset}
           >
             Reset
+          </button>
+
+          <button
+            type="submit"
+            className="bg-green-300 hover:bg-green-500 p-4 rounded-2xl dark:bg-blue-700 dark:hover:bg-blue-800 dark:text-gray-200"
+            onClick={handleCreateUser}
+          >
+            {isLoading ? "SigningIn..." : "Sign Up"}
           </button>
         </div>
       </div>

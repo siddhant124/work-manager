@@ -29,7 +29,7 @@ export const CustomNavbar = () => {
   }
 
   return (
-    <nav className="bg-red-300 h-16 py-2 px-3 flex justify-between items-center fixed w-full">
+    <nav className="bg-red-300 dark:bg-black dark:text-white h-16 py-2 px-3 flex justify-between items-center fixed w-full">
       <div className="brand">
         <h1 className="text-2xl font-mono font-semibold">Work Manager</h1>
       </div>
